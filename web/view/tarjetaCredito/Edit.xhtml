@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TarjetaCreditoEditDlg" widgetVar="TarjetaCreditoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditTarjetaCreditoTitle}">
+            <h:form id="TarjetaCreditoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tarjetaCreditoController.tarjetaCredito != null}">
+                        <p:outputLabel value="#{bundle.CreateTarjetaCreditoTitle_producto}" for="producto" />
+                        <p:selectOneMenu id="producto" value="#{tarjetaCreditoController.tarjetaCredito.producto}" style="width:125px">
+                            <f:selectItem itemLabel="Seleccionar Producto" itemValue="" />
+                            <f:selectItem itemLabel="Visa" itemValue="1234" />
+                            <f:selectItem itemLabel="MasterCard" itemValue="4321" />
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel value="#{bundle.CreateTarjetaCreditoLabel_user}" for="user" />
+                        <p:selectOneMenu id="user" value="#{tarjetaCreditoController.tarjetaCredito.user}" >
+                            <f:selectItems value="#{userController.listUsers}"
+                                           var="userItem"
+                                           itemValue="#{userItem.nombre}"/>
+                        </p:selectOneMenu>
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tarjetaCreditoController.update}" value="#{bundle.Save}" update="display,:TarjetaCreditoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'TarjetaCreditoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TarjetaCreditoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
